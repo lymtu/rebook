@@ -1,0 +1,15 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translate(var(--transform-x, 0), var(--transform-y, 0));
+    -webkit-transform: translate(var(--transform-x, 0), var(--transform-y, 0));
+    -moz-transform: translate(var(--transform-x, 0), var(--transform-y, 0));
+    -ms-transform: translate(var(--transform-x, 0), var(--transform-y, 0));
+    -o-transform: translate(var(--transform-x, 0), var(--transform-y, 0));
+}
+}
+
+.fade-in {
+  animation: fade-in var(--animation-duration, 0.5s) ease-in-out;
+  -webkit-animation: fade-in var(--animation-duration, 0.5s) ease-in-out;
+}

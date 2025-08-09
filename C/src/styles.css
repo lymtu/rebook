@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+* {
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  scrollbar-color: #888888;
+}
+
+.no-scrollBar {
+  scrollbar-width: none;
+}
+.no-scrollBar::-webkit-scrollbar {
+  display: none;
+}
