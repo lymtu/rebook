@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: rebook-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: rebook
+      POSTGRES_PASSWORD: rebook
+      POSTGRES_DB: rebook
+    ports:
+      - '5432:5432'
+    volumes:
+      - rebook_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U rebook -d rebook']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # MinIO acts as a local stand-in for Tencent COS / S3 during development.
+  # Web console: http://localhost:9001 (rebook / rebook12345)
+  # S3 endpoint: http://localhost:9000
+  minio:
+    image: minio/minio:latest
+    container_name: rebook-minio
+    restart: unless-stopped
+    command: server /data --console-address ':9001'
+    environment:
+      MINIO_ROOT_USER: rebook
+      MINIO_ROOT_PASSWORD: rebook12345
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - rebook_minio_data:/data
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/minio/health/live']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Creates the default bucket on first start so the server's local storage
+  # provider has somewhere to point at out of the box.
+  minio-init:
+    image: minio/mc:latest
+    container_name: rebook-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 rebook rebook12345 &&
+      mc mb --ignore-existing local/rebook-dev &&
+      mc anonymous set download local/rebook-dev &&
+      echo 'MinIO bucket rebook-dev ready.'
+      "
+
+volumes:
+  rebook_pg_data:
+  rebook_minio_data:

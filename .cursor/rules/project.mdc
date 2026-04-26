@@ -1,0 +1,32 @@
+---
+description: rebook monorepo always-on rules
+alwaysApply: true
+---
+
+# rebook project rules
+
+This is a pnpm workspace with three apps (`apps/server`, `apps/web`, `apps/miniapp`) and one shared package (`packages/shared`). Read [AGENTS.md](mdc:AGENTS.md) for the full working contract.
+
+## Always
+
+- Talk to the user in **Chinese**. Write code, identifiers, and comments in **English**.
+- Use **pnpm** for every package operation. Never `npm install` or `yarn`.
+- Define API DTOs and Zod schemas in `packages/shared` first, then consume from server and clients.
+- New backend logic flows route → service → repository (Drizzle); never query the DB from a route handler.
+- Never edit a database migration that is already merged; create a new one instead.
+- Validate every external input at the boundary with Zod.
+
+## Never
+
+- Don't import `apps/server` code from `apps/web` or `apps/miniapp`.
+- Don't introduce a new dependency (UI kit, ORM, state lib, etc.) without confirming with the user.
+- Don't use `any`, unjustified `@ts-ignore`, or `console.log` in committed code.
+- Don't commit `.env`, secrets, or build artifacts.
+
+## Skills
+
+When the task touches a known area, the matching SKILL.md auto-loads. The skills are: `elysia-route`, `db-schema`, `web-page`, `taro-page`, `shared-types`, `auth`, `image-upload`. Read them before editing the corresponding area.
+
+## Cross-app changes
+
+If a change spans server + a client, follow the standard flow documented in [AGENTS.md](mdc:AGENTS.md) section 7.

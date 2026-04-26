@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* From apps/web/rebook.pen — ReBook Web 画板 */
+:root {
+  --rebook-canvas: #e4ddd2;
+  --rebook-ink: #1e3322;
+  --rebook-green: #2d6b3f;
+  --rebook-cream: #f6f1e8;
+  --rebook-topbar: #fafaf7;
+  --rebook-muted: #6b7b6b;
+  --rebook-sub: #4a5a4a;
+  --rebook-border: #d4cfc2;
+  --rebook-border-soft: #e8e0d4;
+  --rebook-white: #ffffff;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background-color: var(--rebook-canvas);
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.font-display {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-feature-settings: 'liga' 1, 'kern' 1;
+}
+
+/* 主内容卡片：比稿面略柔和的层次，避免「一块死白」 */
+.rebook-main-surface {
+  box-shadow:
+    0 1px 2px rgba(30, 51, 34, 0.04),
+    0 8px 28px rgba(30, 51, 34, 0.06);
+}
+
+.admin-sider-menu.ant-menu-dark .ant-menu-item-selected {
+  background-color: #2d6b3f !important;
+}

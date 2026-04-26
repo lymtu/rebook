@@ -1,0 +1,53 @@
+{
+  "name": "rebook",
+  "version": "0.0.0",
+  "private": true,
+  "description": "二手书交易应用 — 三端单仓（Elysia 后端 + React Web + Taro 小程序）",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9",
+    "bun": ">=1.1"
+  },
+  "scripts": {
+    "build:shared": "pnpm --filter @rebook/shared build",
+    "dev": "pnpm run build:shared && pnpm -r --parallel dev",
+    "dev:server": "pnpm run build:shared && pnpm --filter @rebook/server dev",
+    "dev:web": "pnpm run build:shared && pnpm --filter @rebook/web dev",
+    "dev:miniapp": "pnpm run build:shared && pnpm --filter @rebook/miniapp dev:weapp",
+    "build": "pnpm run build:shared && pnpm -r build",
+    "build:server": "pnpm run build:shared && pnpm --filter @rebook/server build",
+    "build:web": "pnpm run build:shared && pnpm --filter @rebook/web build",
+    "build:miniapp": "pnpm run build:shared && pnpm --filter @rebook/miniapp build:weapp",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\" --ignore-path .gitignore",
+    "typecheck": "pnpm run build:shared && pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "db:generate": "pnpm --filter @rebook/server db:generate",
+    "db:migrate": "pnpm --filter @rebook/server db:migrate",
+    "db:studio": "pnpm --filter @rebook/server db:studio",
+    "db:seed": "pnpm --filter @rebook/server db:seed"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@sinclair/typebox": "^0.34.0",
+      "file-type": "^20.0.0",
+      "webpackbar": "^7.0.0"
+    },
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "vite": "^5.0.0",
+        "@tarojs/components": "^4.0.0",
+        "@tarojs/helper": "^4.0.0",
+        "@tarojs/plugin-platform-h5": "^4.0.0",
+        "@tarojs/plugin-framework-react": "^4.0.0",
+        "@tarojs/react": "^4.0.0",
+        "@tarojs/runtime": "^4.0.0",
+        "@tarojs/shared": "^4.0.0"
+      }
+    }
+  }
+}
